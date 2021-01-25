@@ -10,7 +10,10 @@ class MunkiZentralEnrollPkgBuilder(EnrollmentPackageBuilder):
     name = "Zentral Munki Enrollment"
     form = EnrollmentForm
     package_name = "zentral_munki_enroll.pkg"
-    base_package_identifier = "io.zentral.munki_enroll"
+    # split, reverse resulting list, append pkgname, join back together
+    url_reversed = get_tls_hostname().split('.')[::-1]
+    url_reversed.append('munki_enroll')
+    base_package_identifier = '.'.join(url_reversed)
     build_tmpl_dir = os.path.join(BASE_DIR, "build.tmpl")
 
     def extra_build_steps(self):
